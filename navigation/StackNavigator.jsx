@@ -9,7 +9,7 @@ const StackNavigator = () => {
   return (
    <NavigationContainer>
     <stack.Navigator>
-        <stack.Screen name="Home" component={HomeScreen} />
+        <stack.Screen name="home" component={HomeScreen} />
     </stack.Navigator>
    </NavigationContainer>
   )
