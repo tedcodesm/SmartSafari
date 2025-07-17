@@ -1,12 +1,15 @@
-import { View, Text ,TextInput,TouchableOpacity} from 'react-native'
+import { View, Text ,TextInput,TouchableOpacity,Image} from 'react-native'
 import React from 'react'
 
 const LoginScreen = () => {
   return (
     <View className="flex-1 items-center justify-start w-full bg-[#87CEEB]">
         <View className=" flex w-full h-56  rounded-lg">
-            <Text className="text-2xl font-bold text-center mt-4">Login</Text>
-        </View>
+                <Image
+                  className="w-full h-56  object-fit"
+                  source={require("../assets/login.jpeg")}
+                />{" "}
+              </View>
         <View className="bg-white flex-1 w-full rounded-t-lg p-4">
             <Text className="text-2xl font-bold font-serif text-center mt-4">Welcome Back</Text>
             <View className="mt-4">
