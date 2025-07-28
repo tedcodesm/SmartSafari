@@ -3,6 +3,7 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeScreen from '../screens/HomeScreen'
 import Icon  from 'react-native-vector-icons/MaterialCommunityIcons'
+import ProfileScreen from '../screens/ProfileScreen'
 
 const Tab = createBottomTabNavigator()
 const BottomNavigator = () => {
@@ -19,9 +20,19 @@ const BottomNavigator = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "home",
           tabBarIcon: ({ focused }) => (
             <Icon name="home" size={25} color={focused ? "orange" : "black"} />
+          ),
+        }}
+      />
+        <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          tabBarLabel: "profile",
+          tabBarIcon: ({ focused }) => (
+            <Icon name="account" size={25} color={focused ? "orange" : "black"} />
           ),
         }}
       />

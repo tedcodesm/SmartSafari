@@ -4,13 +4,12 @@ import StackNavigator from './navigation/StackNavigator';
 import SplashScreen from './screens/SplashScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
+import OtpScreen from './screens/OtpScreen';
 
 
 export default function App() {
   return (
-    <View className="flex-1 items-center justify-center ">
-      <LoginScreen/>
-    </View>
+      <StackNavigator/>
   );
 }
 

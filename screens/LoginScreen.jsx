@@ -1,7 +1,7 @@
 import { View, Text ,TextInput,TouchableOpacity,Image} from 'react-native'
 import React from 'react'
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
   return (
     <View className="flex-1 items-center justify-start w-full bg-[#87CEEB]">
         <View className=" flex w-full h-56  rounded-lg">
@@ -23,7 +23,7 @@ const LoginScreen = () => {
             <TouchableOpacity className="bg-blue-500 p-2 rounded-lg mt-4">
                 <Text className="text-white text-lg text-center">Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="mt-4">
+            <TouchableOpacity onPress={()=> navigation.navigate("signup")} className="mt-4">
                 <Text className="text-blue-500 text-center"> <Text className="font-bold text-black mr-4">Don't have an account?</Text> Sign Up</Text>
             </TouchableOpacity>
         </View>

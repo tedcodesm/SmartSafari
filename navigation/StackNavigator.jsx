@@ -1,17 +1,28 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { NavigationContainer } from '@react-navigation/native'
-import HomeScreen from '../screens/HomeScreen'
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import SplashScreen from '../screens/SplashScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import LoginScreen from '../screens/LoginScreen';
+import SignupScreen from '../screens/SignupScreen';
+import DrawerNavigator from './DrawerNavigator';
+import BottomNavigator from './BottomNavigator';
 
-const stack = createBottomTabNavigator()
+const Stack = createStackNavigator();
 const StackNavigator = () => {
   return (
-   <NavigationContainer>
-    <stack.Navigator>
-        <stack.Screen name="home" component={HomeScreen} />
-    </stack.Navigator>
-   </NavigationContainer>
+  <NavigationContainer>
+    <Stack.Navigator>
+    <Stack.Screen name="splash" component={SplashScreen} options={{headerShown:false}} />
+    <Stack.Screen name="bottom" component={BottomNavigator} options={{headerShown:false}} />
+    <Stack.Screen name="profile" component={ProfileScreen} options={{headerShown:false}} />
+    <Stack.Screen name="login" component={LoginScreen} options={{headerShown:false}} />
+    <Stack.Screen name="signup" component={SignupScreen} options={{headerShown:false}} />
+         
+    </Stack.Navigator>
+
+  </NavigationContainer>
   )
 }
 
