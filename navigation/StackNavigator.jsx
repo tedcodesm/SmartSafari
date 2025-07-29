@@ -8,6 +8,7 @@ import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
 import DrawerNavigator from './DrawerNavigator';
 import BottomNavigator from './BottomNavigator';
+import MapScreen from '../screens/MapScreen';
 
 const Stack = createStackNavigator();
 const StackNavigator = () => {
@@ -15,8 +16,10 @@ const StackNavigator = () => {
   <NavigationContainer>
     <Stack.Navigator>
     <Stack.Screen name="splash" component={SplashScreen} options={{headerShown:false}} />
+    <Stack.Screen name="drawer" component={DrawerNavigator} options={{headerShown:false}} />
     <Stack.Screen name="bottom" component={BottomNavigator} options={{headerShown:false}} />
     <Stack.Screen name="profile" component={ProfileScreen} options={{headerShown:false}} />
+    <Stack.Screen name="map" component={MapScreen} options={{headerShown:false}} />
     <Stack.Screen name="login" component={LoginScreen} options={{headerShown:false}} />
     <Stack.Screen name="signup" component={SignupScreen} options={{headerShown:false}} />
          
