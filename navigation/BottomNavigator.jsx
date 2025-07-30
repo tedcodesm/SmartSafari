@@ -5,13 +5,14 @@ import HomeScreen from '../screens/HomeScreen'
 import Icon  from 'react-native-vector-icons/MaterialCommunityIcons'
 import ProfileScreen from '../screens/ProfileScreen'
 import MapScreen from '../screens/MapScreen'
+import InteligentScreen from '../screens/AgentScreen'
 
 const Tab = createBottomTabNavigator()
 const BottomNavigator = () => {
   return (
     <Tab.Navigator
     screenOptions={{
-        tabBarActiveTintColor: "orange",
+        tabBarActiveTintColor: "blue",
         tabBarInactiveTintColor: "black",
         tabBarStyle: { backgroundColor: "#e5e7eb" },
         headerShown: false,
@@ -23,17 +24,18 @@ const BottomNavigator = () => {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ focused }) => (
-            <Icon name="home" size={25} color={focused ? "orange" : "black"} />
+            <Icon name="home" size={25} color={focused ? "blue" : "black"} />
           ),
         }}
       />
+       
         <Tab.Screen
-        name="profile"
-        component={ProfileScreen}
+        name="int"
+        component={InteligentScreen}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "AI",
           tabBarIcon: ({ focused }) => (
-            <Icon name="account" size={25} color={focused ? "orange" : "black"} />
+            <Icon name="robot" size={25} color={focused ? "blue" : "black"} />
           ),
         }}
       />
@@ -43,10 +45,20 @@ const BottomNavigator = () => {
         options={{
           tabBarLabel: "Map",
           tabBarIcon: ({ focused }) => (
-            <Icon name="map" size={25} color={focused ? "orange" : "black"} />
+            <Icon name="map" size={25} color={focused ? "blue" : "black"} />
           ),
         }}
       />
+       <Tab.Screen
+        name="profile"
+        component={ProfileScreen}
+        options={{
+          tabBarLabel: "Profile",
+          tabBarIcon: ({ focused }) => (
+            <Icon name="account" size={25} color={focused ? "blue" : "black"} />
+          ),
+        }}
+      />     
 
     </Tab.Navigator>
   )

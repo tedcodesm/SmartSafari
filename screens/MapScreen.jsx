@@ -15,7 +15,7 @@ export default function MapScreen() {
   };
 
  const getDirections = async (startLoc, destinationLoc) => {
-  const API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
+  const API_KEY = '';
   const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${destinationLoc}&key=${API_KEY}`;
 
   try {
