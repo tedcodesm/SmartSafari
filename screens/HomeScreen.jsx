@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   StatusBar,
   Pressable,
+  TextInput
 } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -20,13 +21,16 @@ const HomeScreen = ({ navigation }) => {
           Welcome
         </Text>
       </View>
-      <Text>HomeScreen</Text>
-      <View className="flex-1 items-center justify-center">
-        <Text className="text-2xl font-bold">Welcome to the Home Screen!</Text>
+      <View className="flex py-2 items-center justify-center px-4">
+        <TextInput className="w-full border py-2 ps-4 rounded-full"></TextInput>
+        <Icon
+          name="magnify"
+          size={28}     
+          color="#037ff3"
+          className="absolute right-6 top-3"
+          />
       </View>
-      <View className="flex-1 items-center justify-center">
-        <Text className="text-2xl font-bold ">Explore our features</Text>
-      </View>
+     
     </View>
   );
 };
