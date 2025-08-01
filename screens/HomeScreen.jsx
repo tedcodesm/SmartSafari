@@ -30,6 +30,12 @@ const HomeScreen = ({ navigation }) => {
           className="absolute right-6 top-3"
           />
       </View>
+      <View>
+        <Text className="text-[#037ff3] font-bold text-lg tracking-wider font-serif">
+          Recent Searches
+        </Text>
+        
+      </View>
      
     </View>
   );
