@@ -3,40 +3,141 @@ import {
   Text,
   TouchableOpacity,
   StatusBar,
-  Pressable,
-  TextInput
+  TextInput,
+  FlatList,
+  ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
+const months = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+const sampleDays = [
+  {
+    day: "1",
+    morningArrival: "07:30",
+    morningDeparture: "08:00",
+    eveningArrival: "16:00",
+    eveningDeparture: "16:30",
+  },
+  {
+    day: "2",
+    morningArrival: "07:28",
+    morningDeparture: "08:01",
+    eveningArrival: "16:05",
+    eveningDeparture: "16:35",
+  },
+];
+
 const HomeScreen = ({ navigation }) => {
+  const [showMonths, setShowMonths] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState(null);
+
   return (
-    <View>
+    <View className="flex-1 bg-white">
       <StatusBar barStyle="light-content" backgroundColor="#037ff3" />
-      <View className="h-24 rounded-b-xl flex-row items-center justify-between px-8  bg-[#037ff3]">
+
+      {/* Header */}
+      <View className="h-24 rounded-b-3xl flex-row items-center justify-between px-6 bg-[#037ff3]">
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Icon name="menu" size={28} color="white" />
         </TouchableOpacity>
         <Text className="text-white font-bold text-xl tracking-wider font-serif">
           Welcome
         </Text>
+        <View className="w-7" /> {/* Spacer */}
       </View>
-      <View className="flex py-2 items-center justify-center px-4">
-        <TextInput className="w-full border py-2 ps-4 rounded-full"></TextInput>
-        <Icon
-          name="magnify"
-          size={28}     
-          color="#037ff3"
-          className="absolute right-6 top-3"
+
+      {/* Search Bar */}
+      <View className="flex-row items-center px-6 py-3">
+        <View className="relative w-full">
+          <TextInput
+            placeholder="Search..."
+            className="w-full border border-gray-300 bg-white py-2 ps-4 pr-12 rounded-full shadow-sm"
           />
+          <Icon
+            name="magnify"
+            size={24}
+            color="#037ff3"
+            className="absolute right-4 top-2.5"
+          />
+        </View>
       </View>
-      <View>
-        <Text className="text-[#037ff3] font-bold text-lg tracking-wider font-serif">
-          Recent Searches
-        </Text>
-        
-      </View>
-     
+
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View className="flex-1 items-center bg-[#f0f8ff] w-full pt-4 pb-10">
+
+          {/* Month Selector */}
+          <TouchableOpacity
+            className="bg-[#037ff3] w-[90%] flex-row h-12 rounded-full items-center justify-between px-6 shadow-md"
+            onPress={() => setShowMonths(!showMonths)}
+          >
+            <Text className="text-white font-bold text-lg">
+              {selectedMonth || "Select Month"}
+            </Text>
+            <Icon
+              name={showMonths ? "chevron-up" : "chevron-down"}
+              size={28}
+              color="white"
+            />
+          </TouchableOpacity>
+
+          {/* Month List */}
+          {showMonths && (
+            <View className="bg-white w-[90%] rounded-xl mt-4 p-4 shadow">
+              {months.map((month) => (
+                <TouchableOpacity
+                  key={month}
+                  className="py-2 border-b border-gray-100"
+                  onPress={() => {
+                    setSelectedMonth(month);
+                    setShowMonths(false);
+                  }}
+                >
+                  <Text className="text-lg text-gray-700">{month}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
+
+          {/* Daily Logs */}
+          {selectedMonth && (
+            <FlatList
+              data={sampleDays}
+              keyExtractor={(item) => item.day}
+              className="w-[90%] mt-4"
+              renderItem={({ item }) => (
+                <View className="bg-white rounded-2xl mb-4 p-4 shadow-md">
+                  <Text className="font-bold text-lg text-[#037ff3] mb-2">
+                    Day {item.day}
+                  </Text>
+                  <View className="flex-row justify-between">
+                    <View>
+                      <Text className="text-gray-700">
+                        Morning Arrival: {item.morningArrival}
+                      </Text>
+                      <Text className="text-gray-700">
+                        Morning Departure: {item.morningDeparture}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text className="text-gray-700">
+                        Evening Arrival: {item.eveningArrival}
+                      </Text>
+                      <Text className="text-gray-700">
+                        Evening Departure: {item.eveningDeparture}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              )}
+            />
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 };

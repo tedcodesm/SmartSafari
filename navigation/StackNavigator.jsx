@@ -10,6 +10,7 @@ import DrawerNavigator from './DrawerNavigator';
 import BottomNavigator from './BottomNavigator';
 import MapScreen from '../screens/MapScreen';
 import InteligentScreen from '../screens/AgentScreen';
+import NotificationScreen from '../screens/NotificationScreen';
 
 const Stack = createStackNavigator();
 const StackNavigator = () => {
@@ -24,6 +25,7 @@ const StackNavigator = () => {
     <Stack.Screen name="map" component={MapScreen} options={{headerShown:false}} />
     <Stack.Screen name="login" component={LoginScreen} options={{headerShown:false}} />
     <Stack.Screen name="signup" component={SignupScreen} options={{headerShown:false}} />
+    <Stack.Screen name="notification" component={NotificationScreen} options={{headerShown:false}} />
          
     </Stack.Navigator>
 

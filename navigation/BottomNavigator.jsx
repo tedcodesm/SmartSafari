@@ -6,6 +6,7 @@ import Icon  from 'react-native-vector-icons/MaterialCommunityIcons'
 import ProfileScreen from '../screens/ProfileScreen'
 import MapScreen from '../screens/MapScreen'
 import InteligentScreen from '../screens/AgentScreen'
+import NotificationScreen from '../screens/NotificationScreen'
 
 const Tab = createBottomTabNavigator()
 const BottomNavigator = () => {
@@ -29,16 +30,7 @@ const BottomNavigator = () => {
         }}
       />
        
-        <Tab.Screen
-        name="int"
-        component={InteligentScreen}
-        options={{
-          tabBarLabel: "AI",
-          tabBarIcon: ({ focused }) => (
-            <Icon name="robot" size={25} color={focused ? "blue" : "black"} />
-          ),
-        }}
-      />
+       
         <Tab.Screen
         name="map"
         component={MapScreen}
@@ -46,6 +38,16 @@ const BottomNavigator = () => {
           tabBarLabel: "Map",
           tabBarIcon: ({ focused }) => (
             <Icon name="map" size={25} color={focused ? "blue" : "black"} />
+          ),
+        }}
+      />
+       <Tab.Screen
+        name="notification"
+        component={NotificationScreen}
+        options={{
+          tabBarLabel: "Notifications",
+          tabBarIcon: ({ focused }) => (
+            <Icon name="bell" size={25} color={focused ? "blue" : "black"} />
           ),
         }}
       />
