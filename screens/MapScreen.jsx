@@ -8,10 +8,9 @@ export default function MapScreen() {
   const [location, setLocation] = useState(null);
   const [routeCoords, setRouteCoords] = useState([]);
 
-  // Destination (e.g., Nairobi National Park)
   const destination = {
-    latitude: -1.373333,
-    longitude: 36.858889,
+    latitude: -1.1659,
+    longitude: 36.785199,
   };
 
  const getDirections = async (startLoc, destinationLoc) => {

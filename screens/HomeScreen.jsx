@@ -48,7 +48,6 @@ const HomeScreen = ({ navigation }) => {
         <Text className="text-white font-bold text-xl tracking-wider font-serif">
           Welcome
         </Text>
-        <View className="w-7" /> {/* Spacer */}
       </View>
 
       {/* Search Bar */}
