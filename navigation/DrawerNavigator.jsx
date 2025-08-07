@@ -6,6 +6,7 @@ import BottomNavigator from "./BottomNavigator";
 import MapScreen from "../screens/MapScreen";
 import InteligentScreen from "../screens/AgentScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import AuthScreen from "../screens/AuthScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -69,6 +70,16 @@ const DrawerNavigator = () => {
           drawerLabel: "Profile",
           drawerIcon: ({ color }) => (
             <Icon name="account" size={25} color="#004F98" style={{ marginRight: 16 }} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Auth"
+        component={AuthScreen}
+        options={{
+          drawerLabel: "Auth",
+          drawerIcon: ({ color }) => (
+            <Icon name="fingerprint" size={25} color="#004F98" style={{ marginRight: 16 }} />
           ),
         }}
       />

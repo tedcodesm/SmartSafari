@@ -11,6 +11,8 @@ import BottomNavigator from './BottomNavigator';
 import MapScreen from '../screens/MapScreen';
 import InteligentScreen from '../screens/AgentScreen';
 import NotificationScreen from '../screens/NotificationScreen';
+import AuthScreen from '../screens/AuthScreen';
+import OtpScreen from '../screens/OtpScreen';
 
 const Stack = createStackNavigator();
 const StackNavigator = () => {
@@ -26,6 +28,8 @@ const StackNavigator = () => {
     <Stack.Screen name="login" component={LoginScreen} options={{headerShown:false}} />
     <Stack.Screen name="signup" component={SignupScreen} options={{headerShown:false}} />
     <Stack.Screen name="notification" component={NotificationScreen} options={{headerShown:false}} />
+    <Stack.Screen name="auth" component={AuthScreen} options={{headerShown:false}} />
+    <Stack.Screen name="otp" component={OtpScreen} options={{headerShown:false}} />
          
     </Stack.Navigator>
 

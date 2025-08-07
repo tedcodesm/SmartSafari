@@ -10,9 +10,35 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-const OtpScreen = () => {
+const OtpScreen = ({ route, navigation }) => {
+  const email = route.params?.email || '';
+  const [Otp,setOtp] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleOtpVerification = async () => {
+    if (!otp) {
+      alert('Please enter a valid 6-digit OTP');
+      return;
+    }
+    try {
+      const res = await axios.post('http://192.168.100.178:3001/api/auth/verify', {
+        otp,
+        email,
+      });
+      if (res.status === 200) {
+        setMessage('OTP verified successfully');
+        navigation.navigate('login'); // Navigate to login screen on success
+      }
+
+    } catch (error) {
+      setMessage(`OTP verification failed: ${error?.response?.data?.message}`);
+      alert(`OTP verification failed: ${error.response?.data.message}`);
+    }
+  }
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -34,10 +60,13 @@ const OtpScreen = () => {
             <TextInput
               className="w-[80%] h-12 px-4 border border-gray-300 rounded-md"
               keyboardType="number-pad"
+              value={Otp}
+              onChangeText={setOtp}
               maxLength={6}
               placeholder="Enter 6-digit OTP"
             />
-            <TouchableOpacity className="w-[80%] h-12 px-4 bg-blue-400 rounded-xl flex items-center justify-center">
+            <TouchableOpacity className="w-[80%] h-12 px-4 bg-blue-400 rounded-xl flex items-center justify-center"
+              onPress={handleOtpVerification}>
               <Text className="text-white font-bold text-xl">Verify OTP</Text>
             </TouchableOpacity>
           </View>

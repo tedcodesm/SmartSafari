@@ -7,12 +7,12 @@ const ProfileScreen = ({navigation}) => {
     <View>
       <View className=" items-center justify-between px-6 py-3 h-20 bg-[#037ff3]  flex-row">
         <TouchableOpacity>
-          <Icon name="chevron-left" size={28} color="white" />
+          <Icon name="chevron-left" size={28} color="blue" className="bg-white p- rounded-full"/>
         </TouchableOpacity>
         <TouchableOpacity
         
           onPress={() => navigation.navigate("notification")}>
-          <Icon name="bell" size={28} color="white" />
+          <Icon name="bell" size={28} color="white"  />
         </TouchableOpacity>
       </View>
       <View className=" flex w-full h-32   rounded-b-lg">

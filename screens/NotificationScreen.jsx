@@ -38,7 +38,7 @@ const NotificationScreen = ({navigation}) => {
     <ScrollView className="flex-1 bg-[#f2f4f7] ">
         <View className=" items-start justify- px-6 py-3 h-16 bg-[#037ff3]  rounded-b-3xl ">
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Icon name="chevron-left" size={28} color="white" />
+                  <Icon name="chevron-left" size={28} color="blue" className="bg-white p- rounded-full" />
                 </TouchableOpacity>
                 
               </View>
