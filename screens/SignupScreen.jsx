@@ -5,25 +5,31 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Modal,
+  Pressable
 } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { BASE_URL } from "../config/ip";
+
 
 const SignupScreen = ({}) => {
   const navigation = useNavigation();
   const [username, setUsername] = useState("user");
-  const [password, setPassword] = useState("12345678");
-  const [email, setEmail] = useState("dbitlmr112624@spu.ac.ke");
+  const [password, setPassword] = useState("jcfvbnm,");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("123456");
+  const [errorModalVisible, setErrorModalVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const handleSignup = async () => {
-    if (!username || !password || !email || !phone) {
-      alert("Please fill all fields");
-      return;
-    }
+    
     try {
-      const response = await axios.post("http://192.168.100.178:3001/api/auth/register", {
+      const response = await axios.post(`${BASE_URL}/auth/register`, {
         username,
         password,
         email,
@@ -34,7 +40,8 @@ const SignupScreen = ({}) => {
         navigation.navigate("otp");
       }
     } catch (error) {
-      alert( error.response?.data?.message || "Signup failed. Please try again.");
+      setErrorMessage(error.response?.data?.message || "Signup failed. Please try again.");
+      setErrorModalVisible(true);
     }
   };
   return (
@@ -84,15 +91,25 @@ const SignupScreen = ({}) => {
           </View>
 
           <View className="mt-4">
-            <Text className="text-lg">Password:</Text>
-            <TextInput
-              value={password}
-              onChangeText={setPassword}
-              className="border border-gray-300 p-2 rounded-lg"
-              placeholder="Enter your password"
-              secureTextEntry
-            />
-          </View>
+  <Text className="text-lg">Password:</Text>
+  <View className="flex-row items-center border border-gray-300 px-2 rounded-lg">
+    <TextInput
+      value={password}
+      onChangeText={setPassword}
+      className="flex-1"
+      placeholder="Enter your password"
+      secureTextEntry={!showPassword}
+    />
+    <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+      <Icon
+        name={showPassword ? 'eye-off' : 'eye'}
+        size={24}
+        color="gray"
+      />
+    </TouchableOpacity>
+  </View>
+</View>
+
           <TouchableOpacity
             className="bg-blue-500 p-2 rounded-lg mt-4"
             onPress={handleSignup}
@@ -113,6 +130,25 @@ const SignupScreen = ({}) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
+       {/* Error Modal */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={errorModalVisible}
+        onRequestClose={() => setErrorModalVisible(false)}
+      >
+        <View className="flex-1 items-center justify-center bg-black/50 px-6">
+          <View className="bg-white p-6 rounded-xl w-full">
+            <Text className="text-red-600 text-lg font-bold mb-2">Signup Failed</Text>
+            <Text className="text-base text-gray-700">{errorMessage}</Text>
+            <Pressable
+              onPress={() => setErrorModalVisible(false)}
+              className="mt-4 bg-blue-500 px-4 py-2 rounded-md">
+              <Text className="text-white text-center">Close</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };

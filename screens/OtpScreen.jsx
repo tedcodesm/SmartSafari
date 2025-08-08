@@ -19,13 +19,13 @@ const OtpScreen = ({ route, navigation }) => {
   const [message, setMessage] = useState('');
 
   const handleOtpVerification = async () => {
-    if (!otp) {
+    if (!Otp) {
       alert('Please enter a valid 6-digit OTP');
       return;
     }
     try {
       const res = await axios.post('http://192.168.100.178:3001/api/auth/verify', {
-        otp,
+        Otp,
         email,
       });
       if (res.status === 200) {
