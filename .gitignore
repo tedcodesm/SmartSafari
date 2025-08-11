@@ -37,3 +37,5 @@ yarn-error.*
 *.tsbuildinfo
 
 config/
+google-services.json
+services/

@@ -12,20 +12,21 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../config/ip';
 
 const OtpScreen = ({ route, navigation }) => {
   const email = route.params?.email || '';
-  const [Otp,setOtp] = useState('');
+  const [otp,setOtp] = useState('');
   const [message, setMessage] = useState('');
 
   const handleOtpVerification = async () => {
-    if (!Otp) {
+    if (!otp) {
       alert('Please enter a valid 6-digit OTP');
       return;
     }
     try {
-      const res = await axios.post('http://192.168.100.178:3001/api/auth/verify', {
-        Otp,
+      const res = await axios.post(`${BASE_URL}/auth/verify`, {
+        otp,
         email,
       });
       if (res.status === 200) {
@@ -60,7 +61,7 @@ const OtpScreen = ({ route, navigation }) => {
             <TextInput
               className="w-[80%] h-12 px-4 border border-gray-300 rounded-md"
               keyboardType="number-pad"
-              value={Otp}
+              value={otp}
               onChangeText={setOtp}
               maxLength={6}
               placeholder="Enter 6-digit OTP"

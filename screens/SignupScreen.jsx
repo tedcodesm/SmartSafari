@@ -19,7 +19,7 @@ const SignupScreen = ({}) => {
   const navigation = useNavigation();
   const [username, setUsername] = useState("user");
   const [password, setPassword] = useState("jcfvbnm,");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("dbitlmr112624@spu.ac.ke");
   const [phone, setPhone] = useState("123456");
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -37,7 +37,7 @@ const SignupScreen = ({}) => {
       });
       if (response.status === 201) {
         alert(`Signup successful: ${response.data.message}`);
-        navigation.navigate("otp");
+        navigation.navigate("otp",{email});
       }
     } catch (error) {
       setErrorMessage(error.response?.data?.message || "Signup failed. Please try again.");
