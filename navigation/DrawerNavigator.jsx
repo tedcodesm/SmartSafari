@@ -7,6 +7,9 @@ import MapScreen from "../screens/MapScreen";
 import InteligentScreen from "../screens/AgentScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import AuthScreen from "../screens/AuthScreen";
+import AddBusScreen from "../screens/AddBusScreen";
+import SetDestinationScreen from "../screens/SetDestinationScreen";
+import BusListScreen from "../screens/BusListScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -70,6 +73,36 @@ const DrawerNavigator = () => {
           drawerLabel: "Profile",
           drawerIcon: ({ color }) => (
             <Icon name="account" size={25} color="#004F98" style={{ marginRight: 16 }} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="add"
+        component={AddBusScreen}
+        options={{
+          drawerLabel: "AddBuss",
+          drawerIcon: ({ color }) => (
+            <Icon name="plus" size={25} color="#004F98" style={{ marginRight: 16 }} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="set"
+        component={SetDestinationScreen}
+        options={{
+          drawerLabel: "Set Destination",
+          drawerIcon: ({ color }) => (
+            <Icon name="map-marker" size={25} color="#004F98" style={{ marginRight: 16 }} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="list"
+        component={BusListScreen}
+        options={{
+          drawerLabel: "List",
+          drawerIcon: ({ color }) => (
+            <Icon name="bus" size={25} color="#004F98" style={{ marginRight: 16 }} />
           ),
         }}
       />

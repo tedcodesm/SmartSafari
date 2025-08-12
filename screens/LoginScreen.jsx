@@ -12,7 +12,6 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { BASE_URL } from "../config/ip";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { requestFCMPermission } from "../services/fcmservice";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -28,7 +27,6 @@ const LoginScreen = () => {
         email,
         password,
       });
-      await requestFCMPermission(token);
 
       navigation.navigate("drawer");
       console.log(res.data);

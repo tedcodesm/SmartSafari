@@ -13,6 +13,9 @@ import InteligentScreen from '../screens/AgentScreen';
 import NotificationScreen from '../screens/NotificationScreen';
 import AuthScreen from '../screens/AuthScreen';
 import OtpScreen from '../screens/OtpScreen';
+import AddBusScreen from '../screens/AddBusScreen';
+import BusListScreen from '../screens/BusListScreen';
+import SetDestinationScreen from '../screens/SetDestinationScreen';
 
 const Stack = createStackNavigator();
 const StackNavigator = () => {
@@ -30,6 +33,9 @@ const StackNavigator = () => {
     <Stack.Screen name="notification" component={NotificationScreen} options={{headerShown:false}} />
     <Stack.Screen name="auth" component={AuthScreen} options={{headerShown:false}} />
     <Stack.Screen name="otp" component={OtpScreen} options={{headerShown:false}} />
+    <Stack.Screen name="add" component={AddBusScreen} options={{headerShown:false}} />
+    <Stack.Screen name="list" component={BusListScreen} options={{headerShown:false}} />
+    <Stack.Screen name="set" component={SetDestinationScreen} options={{headerShown:false}} />
          
     </Stack.Navigator>
 
