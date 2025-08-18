@@ -12,6 +12,8 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { BASE_URL } from "../config/ip";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -27,6 +29,9 @@ const LoginScreen = () => {
         email,
         password,
       });
+      const token = res.data.token;
+     await AsyncStorage.setItem("token", token);
+
 
       navigation.navigate("drawer");
       console.log(res.data);

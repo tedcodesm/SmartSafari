@@ -19,7 +19,7 @@ const SignupScreen = ({}) => {
   const navigation = useNavigation();
   const [username, setUsername] = useState("user");
   const [password, setPassword] = useState("jcfvbnm,");
-  const [email, setEmail] = useState("dbitlmr112624@spu.ac.ke");
+  const [email, setEmail] = useState("kaahenjoroge@gmail.com");
   const [phone, setPhone] = useState("123456");
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
