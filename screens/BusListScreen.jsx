@@ -7,15 +7,21 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function BusListScreen({ navigation }) {
   const [buses, setBuses] = useState([]);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const fetchBuses = async () => {
       try {
-        const token = await AsyncStorage.getItem("token"); // ✅ get token
+        const token = await AsyncStorage.getItem("token"); 
         const res = await axios.get(`${BASE_URL}/buses`, {
-          headers: { Authorization: `Bearer ${token}` }, // ✅ attach token
+          headers: { Authorization: `Bearer ${token}` }, 
         });
         setBuses(res.data);
+             const userData = await AsyncStorage.getItem("user");
+        if (userData) {
+          setUser(JSON.parse(userData)); // stored as JSON.stringify(user)
+        }
+        console.log("User loaded:", userData);
       } catch (err) {
         console.error(
           "Error fetching buses:",
@@ -45,18 +51,20 @@ export default function BusListScreen({ navigation }) {
           >
             <Text className="text-lg font-semibold">{item.plateNumber}</Text>
             <Text className="text-gray-500">
-              Driver: {item.driver?.username}
+              Driver's Name: {item.driver?.username}
             </Text>
           </TouchableOpacity>
         )}
       />
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate("add")}
-        className="mt-4 bg-blue-500 p-4 rounded"
-      >
-        <Text className="text-white text-center">Add New Bus</Text>
-      </TouchableOpacity>
+     {user && user.role === "admin" && (
+       <TouchableOpacity
+         onPress={() => navigation.navigate("AddBus")}
+         className="mt-4 bg-blue-500 p-4 rounded"
+       >
+         <Text className="text-white text-center">Add New Bus</Text>
+       </TouchableOpacity>
+     )}
     </View>
   );
 }

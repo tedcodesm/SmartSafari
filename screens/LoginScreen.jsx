@@ -14,7 +14,6 @@ import { BASE_URL } from "../config/ip";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 const LoginScreen = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("dbitlmr112624@spu.ac.ke");
@@ -30,13 +29,14 @@ const LoginScreen = () => {
         password,
       });
       const token = res.data.token;
-     await AsyncStorage.setItem("token", token);
-
+      await AsyncStorage.setItem("token", token);
+      await AsyncStorage.setItem("user", JSON.stringify(res.data?.user));
+      console.log("User data:", res.data?.user);
 
       navigation.navigate("drawer");
       console.log(res.data);
     } catch (error) {
-      setErrorMessage(
+      setErrorMessage( 
         error.response?.data?.message || "Login failed. Please try again."
       );
       setErrorModalVisible(true);

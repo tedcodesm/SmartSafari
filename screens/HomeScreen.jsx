@@ -7,12 +7,13 @@ import {
   FlatList,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const months = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December",
 ];
 
 const sampleDays = [
@@ -35,6 +36,23 @@ const sampleDays = [
 const HomeScreen = ({ navigation }) => {
   const [showMonths, setShowMonths] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const userData = await AsyncStorage.getItem("user");
+        if (userData) {
+          setUser(JSON.parse(userData)); // stored as JSON.stringify(user)
+        }
+        console.log("User loaded:", userData);
+      } catch (error) {
+        console.error("Error loading user:", error);
+      }
+    };
+
+    loadUser();
+  }, []);
 
   return (
     <View className="flex-1 bg-white">
@@ -46,7 +64,7 @@ const HomeScreen = ({ navigation }) => {
           <Icon name="menu" size={28} color="white" />
         </TouchableOpacity>
         <Text className="text-white font-bold text-xl tracking-wider font-serif">
-          Welcome
+          Welcome {user?.username || ""}
         </Text>
       </View>
 
@@ -68,7 +86,6 @@ const HomeScreen = ({ navigation }) => {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="flex-1 items-center bg-[#f0f8ff] w-full pt-4 pb-10">
-
           {/* Month Selector */}
           <TouchableOpacity
             className="bg-[#037ff3] w-[90%] flex-row h-12 rounded-full items-center justify-between px-6 shadow-md"

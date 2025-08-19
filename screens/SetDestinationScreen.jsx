@@ -1,37 +1,66 @@
-// SetDestinationScreen.js
-import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, Alert } from 'react-native';
-import axios from 'axios';
-import { BASE_URL } from '../config/ip';
+import React, { useState } from "react";
+import { View, Text, Button, ActivityIndicator, Alert } from "react-native";
+import * as Location from "expo-location";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BASE_URL } from "../config/ip";
 
-export default function SetDestinationScreen({ route, navigation }) {
-  const { plateNumber } = route.params;
-  const [lat, setLat] = useState("");
-  const [lng, setLng] = useState("");
-  const [radius, setRadius] = useState("");
+const SetDestinationScreen = ({ route }) => {
+  const { plateNumber } = route.params; // ✅ Get plate number from navigation params
+  const [loading, setLoading] = useState(false);
 
-  const setDestination = () => {
-    axios.patch(`${BASE_URL}/buses/${plateNumber}/destination`, {
-      lat: Number(lat),
-      lng: Number(lng),
-      radius: Number(radius)
-    })
-      .then(() => {
-        Alert.alert("Success", "Destination set!");
-        navigation.goBack();
-      })
-      .catch(err => Alert.alert("Error", err.response?.data?.message || err.message));
+  const setDestination = async (radius = 80) => {
+    try {
+      setLoading(true);
+
+      // Ask for location permission
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission denied", "We need location to set destination.");
+        setLoading(false);
+        return;
+      }
+
+      // Get current device location
+      let location = await Location.getCurrentPositionAsync({});
+      const { latitude, longitude } = location.coords;
+
+      // Get token
+      const token = await AsyncStorage.getItem("token");
+
+      // Send to backend
+      const res = await axios.post(
+        `${BASE_URL}/api/buses/${plateNumber}/destination`, // ✅ fixed endpoint
+        {
+          lat: latitude,
+          lng: longitude,
+          radius,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      console.log("Destination set:", res.data);
+      Alert.alert("Success", "Destination set successfully!");
+    } catch (error) {
+      console.error("Error setting destination:", error.response?.data || error);
+      Alert.alert("Error", error.response?.data?.message || "Failed to set destination");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <View className="flex-1 p-4 bg-white">
+    <View className="flex-1 justify-center items-center">
       <Text className="text-xl font-bold mb-4">Set Destination for {plateNumber}</Text>
-      <TextInput placeholder="Latitude" value={lat} onChangeText={setLat} className="border p-3 mb-3" />
-      <TextInput placeholder="Longitude" value={lng} onChangeText={setLng} className="border p-3 mb-3" />
-      <TextInput placeholder="Radius (m)" value={radius} onChangeText={setRadius} className="border p-3 mb-3" />
-      <TouchableOpacity onPress={setDestination} className="bg-orange-500 p-4 rounded">
-        <Text className="text-white text-center">Save Destination</Text>
-      </TouchableOpacity>
+      {loading ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <Button title="Set Destination" onPress={() => setDestination()} />
+      )}
     </View>
   );
-}
+};
+
+export default SetDestinationScreen;

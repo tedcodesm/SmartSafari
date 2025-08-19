@@ -51,7 +51,7 @@ export default function AddBusScreen({ navigation }) {
       )
       .then(() => {
         Alert.alert("✅ Success", "Bus created!");
-        navigation.goBack();
+        navigation.navigate("set", { plateNumber });
       })
       .catch((err) =>
         Alert.alert("❌ Error", err.response?.data?.message || err.message)
@@ -98,7 +98,7 @@ export default function AddBusScreen({ navigation }) {
             placeholder="Plate Number"
             value={plateNumber}
             onChangeText={setPlateNumber}
-            className="flex-1 ps-2"
+            className="flex-1 ps-2 uppercase"
           />
         </View>
 

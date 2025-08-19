@@ -1,8 +1,31 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { BASE_URL } from "../config/ip";
 
 const ProfileScreen = ({navigation}) => {
+const logout = async () => {
+  try {
+    const token = await AsyncStorage.getItem("token");
+    await axios.post(
+      `${BASE_URL}/auth/logout`,
+      {}, // empty body
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    // Clear stored data
+    await AsyncStorage.removeItem("token");
+    await AsyncStorage.removeItem("user");
+    navigation.navigate("login");
+    return true;
+  } catch (error) {
+    console.error("Logout error", error.response?.data || error.message);
+    return false;
+  }
+};
+
   return (
     <View>
       <View className=" items-center justify-between px-6 py-3 h-20 bg-[#037ff3]  flex-row">
@@ -54,6 +77,10 @@ const ProfileScreen = ({navigation}) => {
           <Icon name="calendar" size={20} color="grey" />
         </TouchableOpacity>
       </View>
+      <TouchableOpacity onPress={logout}
+      className="bg-[#037ff3] p-4 rounded-lg mb-4">
+        <Text className="text-white text-center">Logout</Text>
+      </TouchableOpacity>
       <View className=" bg-[#037ff3] w-full flex">
         <View className="flex-row items-center justify-between px-6 py-3">
           <TouchableOpacity className="flex items-center">
