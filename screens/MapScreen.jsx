@@ -3,6 +3,8 @@ import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
 import polyline from '@mapbox/polyline';
+import { API } from "../config/ip";
+
 
 export default function MapScreen() {
   const [location, setLocation] = useState(null);
@@ -14,7 +16,7 @@ export default function MapScreen() {
   };
 
  const getDirections = async (startLoc, destinationLoc) => {
-  const API_KEY = '';
+  const API_KEY = `${API}`;
   const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${destinationLoc}&key=${API_KEY}`;
 
   try {

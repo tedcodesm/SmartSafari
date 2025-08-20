@@ -29,8 +29,8 @@ const SetDestinationScreen = ({ route }) => {
       const token = await AsyncStorage.getItem("token");
 
       // Send to backend
-      const res = await axios.post(
-        `${BASE_URL}/api/buses/${plateNumber}/destination`, // ✅ fixed endpoint
+      const res = await axios.put(
+        `${BASE_URL}/buses/${plateNumber}/destination`, 
         {
           lat: latitude,
           lng: longitude,
