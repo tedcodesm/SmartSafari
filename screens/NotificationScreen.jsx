@@ -44,7 +44,7 @@ const NotificationScreen = ({navigation}) => {
               </View>
       <View className="mb-4 mt-4">
         <Text className="text-2xl font-bold text-center text-[#037ff3]">
-          Notifications (8)
+          Notifications (3)
         </Text>
       </View>
 

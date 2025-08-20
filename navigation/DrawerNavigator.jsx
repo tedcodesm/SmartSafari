@@ -11,6 +11,7 @@ import AddBusScreen from "../screens/AddBusScreen";
 import SetDestinationScreen from "../screens/SetDestinationScreen";
 import BusListScreen from "../screens/BusListScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import useBusLocationUpdater from "../screens/LocationScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -69,32 +70,23 @@ const DrawerNavigator = () => {
         name="map"
         component={MapScreen}
         options={{
-          drawerLabel: "Map",
+          drawerLabel: "Live Bus Map",
           drawerIcon: ({ color }) => (
             <Icon name="map" size={25} color="#004F98" style={{ marginRight: 16 }} />
           ),
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="int"
         component={InteligentScreen}
         options={{
-          drawerLabel: "AI Chat",
+          drawerLabel: "Answer FAQs",
           drawerIcon: ({ color }) => (
             <Icon name="robot" size={25} color="#004F98" style={{ marginRight: 16 }} />
           ),
         }}
-      />
-      <Drawer.Screen
-        name="profile"
-        component={ProfileScreen}
-        options={{
-          drawerLabel: "Profile",
-          drawerIcon: ({ color }) => (
-            <Icon name="account" size={25} color="#004F98" style={{ marginRight: 16 }} />
-          ),
-        }}
-      />
+      /> */}
+ 
      {
       user && user.role === 'admin' && (
          <Drawer.Screen
@@ -109,21 +101,12 @@ const DrawerNavigator = () => {
       />
       )
      }
-      <Drawer.Screen
-        name="set"
-        component={SetDestinationScreen}
-        options={{
-          drawerLabel: "Set Destination",
-          drawerIcon: ({ color }) => (
-            <Icon name="map-marker" size={25} color="#004F98" style={{ marginRight: 16 }} />
-          ),
-        }}
-      />
+      
       <Drawer.Screen
         name="list"
         component={BusListScreen}
         options={{
-          drawerLabel: "List",
+          drawerLabel: "Available Buses",
           drawerIcon: ({ color }) => (
             <Icon name="bus" size={25} color="#004F98" style={{ marginRight: 16 }} />
           ),
@@ -133,9 +116,30 @@ const DrawerNavigator = () => {
         name="Auth"
         component={AuthScreen}
         options={{
-          drawerLabel: "Auth",
+          drawerLabel: "Answer FAQs",
           drawerIcon: ({ color }) => (
             <Icon name="fingerprint" size={25} color="#004F98" style={{ marginRight: 16 }} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="loc"
+        component={useBusLocationUpdater}
+        options={{
+          drawerLabel: "Location update",
+          drawerIcon: ({ color }) => (
+            <Icon name="road" size={25} color="#004F98" style={{ marginRight: 16 }} />
+          ),
+        }}
+      />
+
+           <Drawer.Screen
+        name="profile"
+        component={ProfileScreen}
+        options={{
+          drawerLabel: "Profile",
+          drawerIcon: ({ color }) => (
+            <Icon name="account" size={25} color="#004F98" style={{ marginRight: 16 }} />
           ),
         }}
       />

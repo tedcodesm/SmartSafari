@@ -51,7 +51,6 @@ export default function AddBusScreen({ navigation }) {
       )
       .then(() => {
         Alert.alert("✅ Success", "Bus created!");
-        navigation.navigate("set", { plateNumber });
       })
       .catch((err) =>
         Alert.alert("❌ Error", err.response?.data?.message || err.message)

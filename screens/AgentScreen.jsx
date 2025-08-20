@@ -73,7 +73,7 @@ const sendPrompt = () => {
       keyboardVerticalOffset={80}
     >
       <View className="mb-4 px-4 bg-[#037ff3] rounded-b-xl flex-row items-center py-4 justify-between w-full">
-              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <TouchableOpacity onPress={() => navigation.navigate("drawer")}>
                 <Icons name="chevron-left" size={24} color="blue" className="bg-white p- rounded-full"/>
               </TouchableOpacity>
               <Text className="text-2xl font-bold text-white mb-4">

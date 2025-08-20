@@ -16,6 +16,7 @@ import OtpScreen from '../screens/OtpScreen';
 import AddBusScreen from '../screens/AddBusScreen';
 import BusListScreen from '../screens/BusListScreen';
 import SetDestinationScreen from '../screens/SetDestinationScreen';
+import UseBusLocationUpdater from '../screens/LocationScreen';
 
 const Stack = createStackNavigator();
 const StackNavigator = () => {
@@ -36,6 +37,7 @@ const StackNavigator = () => {
     <Stack.Screen name="add" component={AddBusScreen} options={{headerShown:false}} />
     <Stack.Screen name="list" component={BusListScreen} options={{headerShown:false}} />
     <Stack.Screen name="set" component={SetDestinationScreen} options={{headerShown:false}} />
+    <Stack.Screen name="loc" component={UseBusLocationUpdater} options={{headerShown:false}} />
          
     </Stack.Navigator>
 
