@@ -4,7 +4,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BASE_URL } from "../config/ip";
 
-const UseBusLocationUpdater = () => {
+const UseBusLocationUpdater = ({route}) => {
       const { plateNumber } = route.params; // comes from navigation
   UseBusLocationUpdater(plateNumber);   // ✅ pass it into hook
 
