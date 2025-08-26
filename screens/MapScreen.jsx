@@ -68,7 +68,6 @@ export default function MapScreen() {
     const intervalId = setInterval(async () => {
       try {
         const res = await axios.get(`${BASE_URL}/buses/drivers/68a2ec5f7f4071999c046c57/destination`);
-        // replace KBS122e with actual plateNumber param
         console.log("found location data",res.data)
         console.log("latitude data",res.data.destination.latitude)
         console.log("longitude data",res.data.destination.longitude)
