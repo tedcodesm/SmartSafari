@@ -6,7 +6,9 @@ import polyline from '@mapbox/polyline';
 import axios from "axios";
 import { API, BASE_URL } from "../config/ip"; // make sure BASE_URL points to your backend
 
-export default function MapScreen() {
+export default function MapScreen({route}) {
+  const driverId = route?.params?.driverId || null; 
+
   const [userLocation, setUserLocation] = useState(null);
   const [driverLocation, setDriverLocation] = useState(null);
   const [routeCoords, setRouteCoords] = useState([]);
@@ -65,9 +67,10 @@ export default function MapScreen() {
 
   // Poll driver’s location from backend every 5s
   useEffect(() => {
+    if (!driverId) return;
     const intervalId = setInterval(async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/buses/drivers/68a2ec5f7f4071999c046c57/destination`);
+        const res = await axios.get(`${BASE_URL}/buses/drivers/${driverId}/destination`);
         console.log("found location data",res.data)
         console.log("latitude data",res.data.destination.latitude)
         console.log("longitude data",res.data.destination.longitude)
@@ -83,7 +86,7 @@ export default function MapScreen() {
     }, 5000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [driverId]);
 
   if (!userLocation) {
     return (

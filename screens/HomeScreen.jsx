@@ -84,7 +84,7 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} vertical={true}>
         <View className="flex-1 items-center bg-[#f0f8ff] w-full pt-4 pb-10">
           {/* Month Selector */}
           <TouchableOpacity

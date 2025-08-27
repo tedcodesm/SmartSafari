@@ -1,6 +1,13 @@
 // BusListScreen.js
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, TouchableOpacity, Alert,ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+} from "react-native";
 import axios from "axios";
 import { BASE_URL } from "../config/ip";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,14 +25,16 @@ export default function BusListScreen({ navigation }) {
         });
         setBuses(res.data);
 
-        // Load logged-in user
         const userData = await AsyncStorage.getItem("user");
         if (userData) {
           setUser(JSON.parse(userData)); // stored as JSON.stringify(user)
         }
         console.log("User loaded:", userData);
       } catch (err) {
-        console.error("Error fetching buses:", err.response?.data || err.message);
+        console.error(
+          "Error fetching buses:",
+          err.response?.data || err.message
+        );
       }
     };
 
@@ -38,7 +47,6 @@ export default function BusListScreen({ navigation }) {
       return;
     }
 
-    // ✅ Only allow the assigned driver or admin
     if (user.role === "driver" && bus.driver?._id !== user._id) {
       Alert.alert("Access Denied", "You are not assigned to this bus");
       return;
@@ -54,24 +62,39 @@ export default function BusListScreen({ navigation }) {
         <FlatList
           data={buses}
           keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-          <View className="p-4 border-b border-gray-300">
-            <Text className="text-lg font-semibold">{item.plateNumber}</Text>
-            <Text className="text-gray-500">
-              Driver: {item.driver?.username || "Unassigned"}
-            </Text>
+          renderItem={({ item }) => (
+            <View className="p-4 border-b border-gray-300">
+              <Text className="text-lg font-semibold">{item.plateNumber}</Text>
+              <Text className="text-gray-500">
+                Driver: {item.driver?.username || "Unassigned"}
+              </Text>
 
-            {(user?.role === "driver" || user?._id === item.driver?._id) && (
-              <TouchableOpacity
-                onPress={() => handleSetDestination(item)}
-                className="mt-2 bg-green-500 p-2 rounded"
-              >
-                <Text className="text-white text-center">Set Destination</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-        )}
-      />
+              {user?.role === "driver" || user?._id === item.driver?._id ? (
+                <TouchableOpacity
+                  onPress={() => handleSetDestination(item)}
+                  className="mt-2 bg-green-500 p-2 rounded"
+                >
+                  <Text className="text-white text-center">
+                    Set location
+                  </Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate({
+                      name: "map",
+                      params: { driverId: item.driver?._id },
+                      merge: true,
+                    })
+                  }
+                  className="mt-2 bg-green-500 p-2 rounded"
+                >
+                  <Text className="text-white text-center">Track Bus</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
+        />
       </ScrollView>
 
       {user && user.role === "admin" && (

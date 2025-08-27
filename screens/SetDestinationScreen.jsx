@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, Button, ActivityIndicator, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  ActivityIndicator,
+  Modal,
+  TouchableOpacity,
+} from "react-native";
 import * as Location from "expo-location";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -8,32 +15,25 @@ import { useNavigation } from "@react-navigation/native";
 
 const SetDestinationScreen = ({ route }) => {
   const navigation = useNavigation();
-  const { plateNumber } = route.params; // ✅ Get plate number from navigation params
+  const { plateNumber } = route.params; 
   const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const setDestination = async (radius = 80) => {
     try {
       setLoading(true);
 
-      // Ask for location permission
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        Alert.alert(
-          "Permission denied",
-          "We need location to set destination."
-        );
         setLoading(false);
         return;
       }
 
-      // Get current device location
       let location = await Location.getCurrentPositionAsync({});
       const { latitude, longitude } = location.coords;
 
-      // Get token
       const token = await AsyncStorage.getItem("token");
 
-      // Send to backend
       const res = await axios.put(
         `${BASE_URL}/buses/${plateNumber}/destination`,
         {
@@ -47,33 +47,54 @@ const SetDestinationScreen = ({ route }) => {
       );
 
       console.log("Destination set:", res.data);
-      navigation.navigate("drawer");
 
-      Alert.alert("Success", "Current location set successfully!");
+      setModalVisible(true);
     } catch (error) {
-      console.error(
-        "Error setting destination:",
-        error.response?.data || error
-      );
-      Alert.alert(
-        "Error",
-        error.response?.data?.message || "Failed to set destination"
-      );
+      console.error("Error setting destination:", error.response?.data || error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <View className="flex-1 justify-center items-center">
+    <View className="flex-1 justify-center items-center bg-white">
       <Text className="text-xl font-bold mb-4">
         Set current location for {plateNumber}
       </Text>
+
       {loading ? (
         <ActivityIndicator size="large" />
       ) : (
         <Button title="Set location" onPress={() => setDestination()} />
       )}
+
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View className="flex-1 justify-center items-center bg-black/50">
+          <View className="bg-white p-6 rounded-2xl w-80 shadow-lg items-center">
+            <Text className="text-xl font-bold text-green-600 mb-2">
+              Success 
+            </Text>
+            <Text className="text-gray-700 text-center mb-4">
+              Current location has been set successfully for bus {plateNumber}.
+            </Text>
+
+            <TouchableOpacity
+              onPress={() => {
+                setModalVisible(false);
+                navigation.navigate("drawer"); 
+              }}
+              className="bg-green-500 px-6 py-2 rounded-xl"
+            >
+              <Text className="text-white text-lg">OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };

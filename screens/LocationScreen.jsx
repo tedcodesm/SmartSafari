@@ -1,14 +1,16 @@
+import React, { useEffect } from "react";
+import { View, Text } from "react-native";
 import * as Location from "expo-location";
-import { useEffect } from "react";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BASE_URL } from "../config/ip";
 
-const UseBusLocationUpdater = ({route}) => {
-      const { plateNumber } = route.params; // comes from navigation
-  UseBusLocationUpdater(plateNumber);   // ✅ pass it into hook
+const BusLocationUpdaterScreen = ({ route }) => {
+  const { plateNumber } = route?.params || {}; 
 
   useEffect(() => {
+    if (!plateNumber) return; 
+
     let intervalId;
 
     const startUpdating = async () => {
@@ -42,11 +44,20 @@ const UseBusLocationUpdater = ({route}) => {
 
     return () => clearInterval(intervalId); // cleanup on unmount
   }, [plateNumber]);
+
+  if (!plateNumber) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-red-500">No bus selected.</Text>
+      </View>
+    );
+  }
+
   return (
     <View className="flex-1 justify-center items-center">
-      <Text className="text-lg">Tracking bus {plateNumber}...</Text>
+      <Text className="text-lg">🚍 Tracking bus {plateNumber}...</Text>
     </View>
   );
 };
 
-export default UseBusLocationUpdater;
+export default BusLocationUpdaterScreen;
