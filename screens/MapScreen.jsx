@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, ActivityIndicator } from 'react-native';
-import MapView, { Marker, Polyline } from 'react-native-maps';
-import * as Location from 'expo-location';
-import polyline from '@mapbox/polyline';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, ActivityIndicator, Image } from "react-native";
+import MapView, { Marker, Polyline } from "react-native-maps";
+import * as Location from "expo-location";
+import polyline from "@mapbox/polyline";
 import axios from "axios";
 import { API, BASE_URL } from "../config/ip"; // make sure BASE_URL points to your backend
 
-export default function MapScreen({route}) {
-  const driverId = route?.params?.driverId || null; 
+export default function MapScreen({ route }) {
+  const driverId = route?.params?.driverId || null;
 
   const [userLocation, setUserLocation] = useState(null);
   const [driverLocation, setDriverLocation] = useState(null);
@@ -29,7 +29,7 @@ export default function MapScreen({route}) {
       const json = await response.json();
 
       if (!json.routes || json.routes.length === 0) {
-        console.warn('No routes found:', json);
+        console.warn("No routes found:", json);
         return;
       }
 
@@ -40,7 +40,7 @@ export default function MapScreen({route}) {
       }));
       setRouteCoords(coords);
     } catch (error) {
-      console.error('Error fetching directions:', error);
+      console.error("Error fetching directions:", error);
     }
   };
 
@@ -48,8 +48,8 @@ export default function MapScreen({route}) {
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        alert('Permission denied');
+      if (status !== "granted") {
+        alert("Permission denied");
         return;
       }
 
@@ -70,10 +70,12 @@ export default function MapScreen({route}) {
     if (!driverId) return;
     const intervalId = setInterval(async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/buses/drivers/${driverId}/destination`);
-        console.log("found location data",res.data)
-        console.log("latitude data",res.data.destination.latitude)
-        console.log("longitude data",res.data.destination.longitude)
+        const res = await axios.get(
+          `${BASE_URL}/buses/drivers/${driverId}/destination`
+        );
+        console.log("found location data", res.data);
+        console.log("latitude data", res.data.destination.latitude);
+        console.log("longitude data", res.data.destination.longitude);
         if (res.data?.destination) {
           setDriverLocation({
             latitude: res.data.destination.latitude, // [lng, lat]
@@ -99,6 +101,7 @@ export default function MapScreen({route}) {
   return (
     <MapView
       style={styles.map}
+      provider="google"
       initialRegion={{
         latitude: userLocation.latitude,
         longitude: userLocation.longitude,
@@ -111,7 +114,17 @@ export default function MapScreen({route}) {
 
       {/* Driver Marker */}
       {driverLocation && (
-        <Marker coordinate={driverLocation} title="Driver" pinColor="green" />
+        <Marker
+          coordinate={driverLocation}
+          title="Driver"
+          anchor={{ x: 0.5, y: 0.5 }}
+        >
+          <Image
+            source={require("../assets/bus.png")} 
+            style={{ width: 40, height: 40 }}
+            resizeMode="contain"
+          />
+        </Marker>
       )}
 
       {/* Destination Marker */}
@@ -129,7 +142,7 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
