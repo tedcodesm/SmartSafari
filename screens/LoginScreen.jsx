@@ -13,6 +13,7 @@ import axios from "axios";
 import { BASE_URL } from "../config/ip";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNotification } from "../context/NotificationContext";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -21,6 +22,14 @@ const LoginScreen = () => {
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { schedulePushNotification } = useNotification();
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good Morning";
+    if (hour < 18) return "Good Afternoon";
+    return "Good Evening";
+  };
 
   const handleLogin = async () => {
     try {
@@ -33,10 +42,16 @@ const LoginScreen = () => {
       await AsyncStorage.setItem("user", JSON.stringify(res.data?.user));
       console.log("User data:", res.data?.user);
 
+      await schedulePushNotification(
+        `${getGreeting()} ${res.data.user.username}`,
+        "Welcome to RideBuddy where your journey begins!",
+        { screen: "notification" }
+      );
+
       navigation.navigate("drawer");
       console.log(res.data);
     } catch (error) {
-      setErrorMessage( 
+      setErrorMessage(
         error.response?.data?.message || "Login failed. Please try again."
       );
       setErrorModalVisible(true);

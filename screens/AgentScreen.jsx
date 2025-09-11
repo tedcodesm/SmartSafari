@@ -1,95 +1,112 @@
 import { useState } from "react";
-import { KeyboardAvoidingView, TextInput, Text, View, Platform, TouchableOpacity, FlatList } from "react-native";
+import {
+  KeyboardAvoidingView,
+  TextInput,
+  Text,
+  View,
+  Platform,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 import Icons from "react-native-vector-icons/MaterialCommunityIcons";
 import { GoogleGenAI } from "@google/genai";
+import { GEMINI_API_KEY } from "../config/ip";
 
-const ai = new GoogleGenAI({ apiKey: "" });
+const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
-const chatMessages = [
-  { sender: 'you', message: 'Hello, how are you?' },
-  { sender: 'ML', message: "Hello! How can I assist you today?" },
+// Starter messages before typing
+const initialMessages = [
+  { sender: "you", message: "Hello, how are you?" },
+  { sender: "ML", message: "Hello! How can I assist you today?" },
 ];
 
+// Chat bubble
 function ChatMessage({ item }) {
-  const isYou = item.sender === 'you';
+  const isYou = item.sender === "you";
 
   return (
     <View
-      className={`max-w-[70%] rounded-xl px-4 py-2 my-1 ${isYou ? "self-end bg-[#004F98]" : "self-start bg-orange-200"}`}
+      className={`max-w-[70%] rounded-xl px-4 py-2 my-1 ${
+        isYou ? "self-end bg-[#004F98]" : "self-start bg-orange-200"
+      }`}
     >
-      <Text className="text-xs font-semibold text-gray-700 mb-1">{item.sender}</Text>
-      <Text className={`text-base ${isYou ? "text-white" : "text-black"}`}>{item.message}</Text>
+      <Text className="text-xs font-semibold text-gray-700 mb-1">
+        {item.sender}
+      </Text>
+      <Text className={`text-base ${isYou ? "text-white" : "text-black"}`}>
+        {item.message}
+      </Text>
     </View>
   );
 }
 
 export default function InteligentScreen({ navigation }) {
-  const [messages, setMessages] = useState(chatMessages);
-  const [inputText, setInputText] = useState('');
+  const [messages, setMessages] = useState(initialMessages);
+  const [inputText, setInputText] = useState("");
   const [loading, setLoading] = useState(false);
 
-const makeAiInference = async () => {
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash-lite",
-      contents: inputText.trim()
-    });
+  // Call Gemini
+  const makeAiInference = async (prompt) => {
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-2.0-flash-lite",
+        contents: prompt,
+      });
 
-    setLoading(false);
+      const text = response.response.candidates[0].content.parts[0].text;
 
-    const text = response.text;
-    const aiResponse = {
-      sender: 'ML',
-      message: text,
-    };
-    setMessages(prev => [aiResponse, ...prev]);
-  } catch (error) {
-    console.error("AI error:", error);
-    setLoading(false);
-  }
-};
-
-const sendPrompt = () => {
-  const trimmed = inputText.trim();
-  if (trimmed.length === 0) return;
-
-  const newMessage = {
-    sender: 'you',
-    message: trimmed,
+      const aiResponse = { sender: "ML", message: text };
+      setMessages((prev) => [...prev, aiResponse]);
+    } catch (error) {
+      console.error("AI error:", error);
+      const aiError = { sender: "ML", message: "Sorry, I couldn’t process that." };
+      setMessages((prev) => [...prev, aiError]);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  setMessages(prev => [newMessage, ...prev]);
-  setInputText('');
-  setLoading(true);
-  makeAiInference();
-};
+  // Send user message
+  const sendPrompt = () => {
+    const trimmed = inputText.trim();
+    if (trimmed.length === 0) return;
 
+    const newMessage = { sender: "you", message: trimmed };
+    setMessages((prev) => [...prev, newMessage]);
+    setInputText("");
+    setLoading(true);
 
+    makeAiInference(trimmed);
+  };
 
   return (
     <KeyboardAvoidingView
       className="flex-1 bg-gray-100"
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
       keyboardVerticalOffset={80}
     >
+      {/* Header */}
       <View className="mb-4 px-4 bg-[#037ff3] rounded-b-xl flex-row items-center py-4 justify-between w-full">
-              <TouchableOpacity onPress={() => navigation.navigate("drawer")}>
-                <Icons name="chevron-left" size={24} color="blue" className="bg-white p- rounded-full"/>
-              </TouchableOpacity>
-              <Text className="text-2xl font-bold text-white mb-4">
-                Chat Screen
-              </Text>
-            </View>
+        <TouchableOpacity onPress={() => navigation.navigate("drawer")}>
+          <Icons name="chevron-left" size={24} color="blue" className="bg-white rounded-full" />
+        </TouchableOpacity>
+        <Text className="text-2xl font-bold text-white">Chat Screen</Text>
+      </View>
+
+      {/* Messages */}
       <FlatList
         data={messages}
-        renderItem={ChatMessage}
+        renderItem={({ item }) => <ChatMessage item={item} />}
         keyExtractor={(_, index) => index.toString()}
-        inverted
-        contentContainerStyle={{ padding: 10, flexGrow: 1, justifyContent: 'flex-end' }}
+        contentContainerStyle={{ padding: 10 }}
       />
 
-      {loading && <Text className="text-center text-gray-600 mb-2">Please Wait ...</Text>}
+      {/* Loading indicator */}
+      {loading && (
+        <Text className="text-center text-gray-600 mb-2">Please wait ...</Text>
+      )}
 
+      {/* Input */}
       <View className="flex-row items-center p-2 border-t border-gray-300 bg-white">
         <TextInput
           className="flex-1 px-4 py-2 bg-slate-200 rounded-full text-base"
@@ -97,7 +114,10 @@ const sendPrompt = () => {
           value={inputText}
           onChangeText={setInputText}
         />
-        <TouchableOpacity onPress={sendPrompt} className="ml-2 bg-[#037ff3] px-4 py-2 rounded-full">
+        <TouchableOpacity
+          onPress={sendPrompt}
+          className="ml-2 bg-[#037ff3] px-4 py-2 rounded-full"
+        >
           <Text className="text-white font-bold">Send</Text>
         </TouchableOpacity>
       </View>

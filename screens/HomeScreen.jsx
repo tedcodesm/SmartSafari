@@ -6,10 +6,12 @@ import {
   TextInput,
   FlatList,
   ScrollView,
+  Button,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNotification } from "../context/NotificationContext";
 
 const months = [
   "January","February","March","April","May","June",
@@ -38,6 +40,14 @@ const HomeScreen = ({ navigation }) => {
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [user, setUser] = useState(null);
 
+  const getGreeting = () => {
+    const hours = new Date().getHours();
+
+    if (hours < 12) return "Good Morning";
+    if (hours < 18) return "Good Afternoon";
+    return "Good Evening";
+  };
+
   useEffect(() => {
     const loadUser = async () => {
       try {
@@ -63,8 +73,8 @@ const HomeScreen = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Icon name="menu" size={28} color="white" />
         </TouchableOpacity>
-        <Text className="text-white font-bold text-lg tracking-wider font-serif">
-          Welcome {user?.username || ""}
+        <Text className="text-white font-semibold text-md tracking-wider font-serif">
+          {getGreeting()} {user?.username || ""}
         </Text>
       </View>
 
@@ -153,6 +163,7 @@ const HomeScreen = ({ navigation }) => {
             />
           )}
         </View>
+          
       </ScrollView>
     </View>
   );
