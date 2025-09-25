@@ -1,6 +1,6 @@
 import { View, Text, ScrollView,TouchableOpacity } from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const notifications = [
   {
@@ -38,7 +38,7 @@ const NotificationScreen = ({navigation}) => {
     <ScrollView className="flex-1 bg-[#f2f4f7] ">
         <View className=" items-start justify- px-6 py-3 h-16 bg-[#037ff3]  rounded-b-3xl ">
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Icon name="chevron-left" size={28} color="blue" className="bg-white p- rounded-full" />
+                  <MaterialCommunityIcons name="chevron-left" size={28} color="blue" className="bg-white p- rounded-full" />
                 </TouchableOpacity>
                 
               </View>
@@ -59,7 +59,7 @@ const NotificationScreen = ({navigation}) => {
             className="bg-white w-full rounded-xl p-4  mb-3 shadow-sm flex-row items-start"
           >
             <View className="mr-3 mt-1">
-              <Icon name={icon} size={24} color={color} />
+              <MaterialCommunityIcons name={icon} size={24} color={color} />
             </View>
 
             {/* Message & Timestamp */}

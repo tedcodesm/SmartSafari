@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { BASE_URL } from "../config/ip";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNotification } from "../context/NotificationContext";
 
@@ -95,7 +95,7 @@ const LoginScreen = () => {
               secureTextEntry={!showPassword}
             />
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-              <Icon
+              <MaterialCommunityIcons
                 name={showPassword ? "eye-off" : "eye"}
                 size={24}
                 color="#037fff"

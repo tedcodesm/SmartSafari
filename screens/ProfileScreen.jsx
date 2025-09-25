@@ -7,7 +7,7 @@ import {
   Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
@@ -126,7 +126,7 @@ const ProfileScreen = ({ navigation }) => {
       {/* Header */}
       <View className="items-center justify-between px-6 py-3 h-20 bg-[#037ff3] flex-row">
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon
+          <MaterialCommunityIcons
             name="chevron-left"
             size={28}
             color="blue"
@@ -137,7 +137,7 @@ const ProfileScreen = ({ navigation }) => {
           className="flex-row items-center rounded-full px-4 py-1 bg-blue-950"
           onPress={logout}
         >
-          <Icon name="logout" size={20} color="white" />
+          <MaterialCommunityIcons name="logout" size={20} color="white" />
           <Text className="text-white ps-2">Logout</Text>
         </TouchableOpacity>
       </View>
@@ -155,7 +155,7 @@ const ProfileScreen = ({ navigation }) => {
               className="w-32 h-32 rounded-full"
             />
           ) : (
-            <Icon name="account" size={80} color="#bbb" />
+            <MaterialCommunityIcons name="account" size={80} color="#bbb" />
           )}
 
           {/* Camera overlay */}
@@ -163,7 +163,7 @@ const ProfileScreen = ({ navigation }) => {
             {uploading ? (
               <ActivityIndicator size="small" color="#037ff3" />
             ) : (
-              <Icon name="camera" size={20} color="#037ff3" />
+              <MaterialCommunityIcons name="camera" size={20} color="#037ff3" />
             )}
           </View>
         </TouchableOpacity>

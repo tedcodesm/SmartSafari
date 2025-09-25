@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import axios from "axios";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { BASE_URL } from "../config/ip";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Picker } from "@react-native-picker/picker"; // dropdown picker
@@ -68,7 +68,7 @@ export default function AddBusScreen({ navigation }) {
         />
         <View className="absolute top-10 left-5">
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon
+            <MaterialCommunityIcons
               name="chevron-left"
               size={28}
               color="blue"
@@ -92,7 +92,7 @@ export default function AddBusScreen({ navigation }) {
         </Text>
 
         <View className="flex-row items-center border rounded-full px-3 py-2 mb-4 shadow-sm">
-          <Icon name="bus" size={20} color="#037ff3" />
+          <MaterialCommunityIcons name="bus" size={20} color="#037ff3" />
           <TextInput
             placeholder="Plate Number"
             value={plateNumber}
@@ -104,7 +104,7 @@ export default function AddBusScreen({ navigation }) {
         {/* Dropdown for Driver */}
         <View className="border rounded-full mb-4 bg-gray-100 flex-row items-center px-3">
           {/* Account Icon */}
-          <Icon name="account" size={22} color="#037ff3" />
+          <MaterialCommunityIcons name="account" size={22} color="#037ff3" />
 
           {/* Picker */}
           <Picker
@@ -120,7 +120,7 @@ export default function AddBusScreen({ navigation }) {
         </View>
 
         <View className="flex-row items-center border rounded-full px-3 py-2 mb-6 shadow-sm">
-          <Icon name="map-marker-radius" size={20} color="#037ff3" />
+          <MaterialCommunityIcons name="map-marker-radius" size={20} color="#037ff3" />
           <TextInput
             placeholder="Arrival Radius (meters)"
             keyboardType="numeric"

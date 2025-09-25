@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeScreen from '../screens/HomeScreen'
-import Icon  from 'react-native-vector-icons/MaterialCommunityIcons'
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ProfileScreen from '../screens/ProfileScreen'
 import MapScreen from '../screens/MapScreen'
 import InteligentScreen from '../screens/AgentScreen'
@@ -25,7 +25,7 @@ const BottomNavigator = () => {
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ focused }) => (
-            <Icon name="home" size={25} color={focused ? "blue" : "black"} />
+            <MaterialCommunityIcons name="home" size={25} color={focused ? "blue" : "black"} />
           ),
         }}
       />
@@ -37,7 +37,7 @@ const BottomNavigator = () => {
         options={{
           tabBarLabel: "Map",
           tabBarIcon: ({ focused }) => (
-            <Icon name="map" size={25} color={focused ? "blue" : "black"} />
+            <MaterialCommunityIcons name="map" size={25} color={focused ? "blue" : "black"} />
           ),
         }}
       />
@@ -47,7 +47,7 @@ const BottomNavigator = () => {
         options={{
           tabBarLabel: "Notifications",
           tabBarIcon: ({ focused }) => (
-            <Icon name="bell" size={25} color={focused ? "blue" : "black"} />
+            <MaterialCommunityIcons name="bell" size={25} color={focused ? "blue" : "black"} />
           ),
         }}
       />
@@ -57,7 +57,7 @@ const BottomNavigator = () => {
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ focused }) => (
-            <Icon name="account" size={25} color={focused ? "blue" : "black"} />
+            <MaterialCommunityIcons name="account" size={25} color={focused ? "blue" : "black"} />
           ),
         }}
       />     

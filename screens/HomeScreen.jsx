@@ -9,7 +9,7 @@ import {
   Button,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNotification } from "../context/NotificationContext";
 
@@ -71,7 +71,7 @@ const HomeScreen = ({ navigation }) => {
       {/* Header */}
       <View className="h-24 rounded-b-3xl flex-row items-center justify-between px-6 bg-[#037ff3]">
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Icon name="menu" size={28} color="white" />
+          <MaterialCommunityIcons name="menu" size={28} color="white" />
         </TouchableOpacity>
         <Text className="text-white font-semibold text-md tracking-wider font-serif">
           {getGreeting()} {user?.username || ""}
@@ -85,7 +85,7 @@ const HomeScreen = ({ navigation }) => {
             placeholder="Search..."
             className="w-full border border-gray-300 bg-white py-2 ps-4 pr-12 rounded-full shadow-sm"
           />
-          <Icon
+          <MaterialCommunityIcons
             name="magnify"
             size={24}
             color="#037ff3"
@@ -104,7 +104,7 @@ const HomeScreen = ({ navigation }) => {
             <Text className="text-white font-bold text-lg">
               {selectedMonth || "Select Month"}
             </Text>
-            <Icon
+            <MaterialCommunityIcons
               name={showMonths ? "chevron-up" : "chevron-down"}
               size={28}
               color="white"

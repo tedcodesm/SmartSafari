@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import Icons from "react-native-vector-icons/MaterialCommunityIcons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { GoogleGenAI } from "@google/genai";
 import { GEMINI_API_KEY } from "../config/ip";
 
@@ -88,7 +88,7 @@ export default function InteligentScreen({ navigation }) {
       {/* Header */}
       <View className="mb-4 px-4 bg-[#037ff3] rounded-b-xl flex-row items-center py-4 justify-between w-full">
         <TouchableOpacity onPress={() => navigation.navigate("drawer")}>
-          <Icons name="chevron-left" size={24} color="blue" className="bg-white rounded-full" />
+          <MaterialCommunityIcons name="chevron-left" size={24} color="blue" className="bg-white rounded-full" />
         </TouchableOpacity>
         <Text className="text-2xl font-bold text-white">Chat Screen</Text>
       </View>

@@ -1,7 +1,7 @@
 import { View, Text, SafeAreaView, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import { createDrawerNavigator, DrawerItemList } from "@react-navigation/drawer";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomNavigator from "./BottomNavigator";
 import MapScreen from "../screens/MapScreen";
 import InteligentScreen from "../screens/AgentScreen";
@@ -62,7 +62,7 @@ const DrawerNavigator = () => {
         options={{
           drawerLabel: "Home",
           drawerIcon: ({ color }) => (
-            <Icon name="home" size={25} color="#004F98" style={{ marginRight: 16 }} />
+            <MaterialCommunityIcons name="home" size={25} color="#004F98" style={{ marginRight: 16 }} />
           ),
         }}
       />
@@ -72,7 +72,7 @@ const DrawerNavigator = () => {
         options={{
           drawerLabel: "Live Bus Map",
           drawerIcon: ({ color }) => (
-            <Icon name="map" size={25} color="#004F98" style={{ marginRight: 16 }} />
+            <MaterialCommunityIcons name="map" size={25} color="#004F98" style={{ marginRight: 16 }} />
           ),
         }}
       />
@@ -95,7 +95,7 @@ const DrawerNavigator = () => {
         options={{
           drawerLabel: "AddBus",
           drawerIcon: ({ color }) => (
-            <Icon name="plus" size={25} color="#004F98" style={{ marginRight: 16 }} />
+            <MaterialCommunityIcons name="plus" size={25} color="#004F98" style={{ marginRight: 16 }} />
           ),
         }}
       />
@@ -108,7 +108,7 @@ const DrawerNavigator = () => {
         options={{
           drawerLabel: "Available Buses",
           drawerIcon: ({ color }) => (
-            <Icon name="bus" size={25} color="#004F98" style={{ marginRight: 16 }} />
+            <MaterialCommunityIcons name="bus" size={25} color="#004F98" style={{ marginRight: 16 }} />
           ),
         }}
       />
@@ -118,7 +118,7 @@ const DrawerNavigator = () => {
         options={{
           drawerLabel: "Answer FAQs",
           drawerIcon: ({ color }) => (
-            <Icon name="fingerprint" size={25} color="#004F98" style={{ marginRight: 16 }} />
+            <MaterialCommunityIcons name="fingerprint" size={25} color="#004F98" style={{ marginRight: 16 }} />
           ),
         }}
       />
@@ -128,7 +128,7 @@ const DrawerNavigator = () => {
         options={{
           drawerLabel: "Location update",
           drawerIcon: ({ color }) => (
-            <Icon name="road" size={25} color="#004F98" style={{ marginRight: 16 }} />
+            <MaterialCommunityIcons name="road" size={25} color="#004F98" style={{ marginRight: 16 }} />
           ),
         }}
       />
@@ -139,7 +139,7 @@ const DrawerNavigator = () => {
         options={{
           drawerLabel: "Profile",
           drawerIcon: ({ color }) => (
-            <Icon name="account" size={25} color="#004F98" style={{ marginRight: 16 }} />
+            <MaterialCommunityIcons name="account" size={25} color="#004F98" style={{ marginRight: 16 }} />
           ),
         }}
       />

@@ -4,7 +4,7 @@ import MapView, { Marker, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
 import polyline from "@mapbox/polyline";
 import axios from "axios";
-import { API, BASE_URL } from "../config/ip"; // make sure BASE_URL points to your backend
+import { API, BASE_URL } from "../config/ip"; 
 
 export default function MapScreen({ route }) {
   const driverId = route?.params?.driverId || null;
@@ -13,15 +13,13 @@ export default function MapScreen({ route }) {
   const [driverLocation, setDriverLocation] = useState(null);
   const [routeCoords, setRouteCoords] = useState([]);
 
-  // Destination (fixed point, e.g., school)
   const destination = {
     latitude: -1.1659,
     longitude: 36.785199,
   };
 
-  // Fetch directions between two points
   const getDirections = async (startLoc, destinationLoc) => {
-    const API_KEY = API; // Google Maps API Key
+    const API_KEY = API; 
     const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${destinationLoc}&key=${API_KEY}`;
 
     try {
@@ -49,7 +47,7 @@ export default function MapScreen({ route }) {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        alert("Permission denied");
+        alert("Permission denied"); 
         return;
       }
 

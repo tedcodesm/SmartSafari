@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { View, Text, Alert } from 'react-native';
 import * as LocalAuthentication from 'expo-local-authentication';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 const AuthScreen = () => {
@@ -37,7 +37,7 @@ const AuthScreen = () => {
 
   return (
     <View className="flex-1 items-center justify-center bg-white">
-      <Icon name="fingerprint" size={100} color="#4F8EF7" />
+      <MaterialCommunityIcons name="fingerprint" size={100} color="#4F8EF7" />
       <Text className="text-lg mt-2 text-blue-600 font-bold">Waiting for authentication...</Text>
     </View>
   );
