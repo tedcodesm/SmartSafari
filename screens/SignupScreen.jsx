@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Checkbox from "expo-checkbox";
 import { BASE_URL } from "../config/ip";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -21,9 +22,14 @@ const SignupScreen = ({}) => {
   const [password, setPassword] = useState("jcfvbnm,");
   const [email, setEmail] = useState("kaahenjoroge@gmail.com");
   const [phone, setPhone] = useState("123456");
+  const [role, setRole] = useState("");
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleSelect = (selectedRole) => {
+    setRole(selectedRole);
+  };
 
   const handleSignup = async () => {
     try {
@@ -32,9 +38,9 @@ const SignupScreen = ({}) => {
         password,
         email,
         phone,
+        role
       });
 
-    
       if (response.status === 201) {
         alert(`Signup successful: ${response.data.message}`);
         navigation.navigate("otp", { email });
@@ -62,6 +68,25 @@ const SignupScreen = ({}) => {
           <Text className="text-2xl font-bold font-serif text-center mt-4">
             Create Account
           </Text>
+          <View className="mt-4 flex-row items-center justify-center gap-8">
+            <View className="flex-row items-center mb-3">
+              <Checkbox
+                value={role === "parent"}
+                onValueChange={() => handleSelect("parent")}
+                color={role === "parent" ? "#2563eb" : undefined}
+              />
+              <Text className="ml-2 text-base"> Parent</Text>
+            </View>
+
+            <View className="flex-row items-center mb-3">
+              <Checkbox
+                value={role === "driver"}
+                onValueChange={() => handleSelect("driver")}
+                color={role === "driver" ? "#2563eb" : undefined}
+              />
+              <Text className="ml-2 text-base">Driver</Text>
+            </View>
+          </View>
           <View className="mt-4">
             <Text className="text-lg">Full Name:</Text>
             <TextInput

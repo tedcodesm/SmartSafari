@@ -69,7 +69,7 @@ export default function BusListScreen({ navigation }) {
                 Driver: {item.driver?.username || "Unassigned"}
               </Text>
 
-              {user?.role === "driver" || user?._id === item.driver?._id ? (
+              {user?.role === "driver" & user?._id === item.driver?._id ? (
                 <TouchableOpacity
                   onPress={() => handleSetDestination(item)}
                   className="mt-2 bg-green-500 p-2 rounded"

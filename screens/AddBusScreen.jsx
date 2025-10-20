@@ -97,7 +97,8 @@ export default function AddBusScreen({ navigation }) {
             placeholder="Plate Number"
             value={plateNumber}
             onChangeText={setPlateNumber}
-            className="flex-1 ps-2 uppercase"
+            className="flex-1 ps-2 "
+            autoCapitalize="characters"
           />
         </View>
 
@@ -120,7 +121,11 @@ export default function AddBusScreen({ navigation }) {
         </View>
 
         <View className="flex-row items-center border rounded-full px-3 py-2 mb-6 shadow-sm">
-          <MaterialCommunityIcons name="map-marker-radius" size={20} color="#037ff3" />
+          <MaterialCommunityIcons
+            name="map-marker-radius"
+            size={20}
+            color="#037ff3"
+          />
           <TextInput
             placeholder="Arrival Radius (meters)"
             keyboardType="numeric"
