@@ -15,11 +15,11 @@ import { useNavigation } from "@react-navigation/native";
 
 const SetDestinationScreen = ({ route }) => {
   const navigation = useNavigation();
-  const { plateNumber } = route.params; 
+  const { plateNumber } = route.params;
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const setDestination = async (radius = 80) => {
+  const setCurrentLocation = async (radius = 80) => {
     try {
       setLoading(true);
 
@@ -29,7 +29,10 @@ const SetDestinationScreen = ({ route }) => {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
+      let location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+        mayShowUserSettingsDialog: true,
+      });
       const { latitude, longitude } = location.coords;
 
       const token = await AsyncStorage.getItem("token");
@@ -50,7 +53,10 @@ const SetDestinationScreen = ({ route }) => {
 
       setModalVisible(true);
     } catch (error) {
-      console.error("Error setting destination:", error.response?.data || error);
+      console.error(
+        "Error setting destination:",
+        error.response?.data || error
+      );
     } finally {
       setLoading(false);
     }
@@ -65,7 +71,7 @@ const SetDestinationScreen = ({ route }) => {
       {loading ? (
         <ActivityIndicator size="large" />
       ) : (
-        <Button title="Set location" onPress={() => setDestination()} />
+        <Button title="Set location" onPress={() => setCurrentLocation()} />
       )}
 
       <Modal
@@ -77,7 +83,7 @@ const SetDestinationScreen = ({ route }) => {
         <View className="flex-1 justify-center items-center bg-black/50">
           <View className="bg-white p-6 rounded-2xl w-80 shadow-lg items-center">
             <Text className="text-xl font-bold text-green-600 mb-2">
-              Success 
+              Success
             </Text>
             <Text className="text-gray-700 text-center mb-4">
               Current location has been set successfully for bus {plateNumber}.
@@ -86,7 +92,7 @@ const SetDestinationScreen = ({ route }) => {
             <TouchableOpacity
               onPress={() => {
                 setModalVisible(false);
-                navigation.navigate("drawer"); 
+                navigation.navigate("drawer");
               }}
               className="bg-green-500 px-6 py-2 rounded-xl"
             >
